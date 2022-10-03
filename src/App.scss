@@ -8,6 +8,7 @@
 
   .left-container {
     width: 50%;
+    overflow: hidden;
 
     .header-text {
       color: rgb(100, 100, 100);
@@ -23,6 +24,7 @@
 
   .right-container {
     width: 50%;
+    overflow: hidden;
     background-color: #8b8fe5;
 
     .header-text {

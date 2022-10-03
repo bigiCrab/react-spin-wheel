@@ -106,7 +106,13 @@ const App = () => {
                 backgroundColor: prize.bgColor,
               }}
             >
-              <span style={{ display: "inline-block", width: "3em" }}>
+              <span
+                style={{
+                  display: "inline-block",
+                  width: "3em",
+                  textAlign: "center",
+                }}
+              >
                 {index === landOnIdx ? (
                   "✨"
                 ) : (
