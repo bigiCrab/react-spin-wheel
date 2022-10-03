@@ -3,16 +3,17 @@ import "./App.scss";
 import SpinWheel from "./components/spin-wheel/spin-wheel.component";
 import SpinWheelControl from "./components/spin-wheel-control/spin-wheel-control.component";
 
-type Prize = {
+export type Prize = {
   name: string; // The name of the prize
   color?: string; // text color,  stand out from bgColor
   bgColor: string; // background color
   proportion: number; // proportion of the board
 };
 
-type SpinWheelSetting = {
+export type SpinWheelSetting = {
   landOnIdx: number; // well land on index of the prizes
   prizes: Prize[];
+  ux: { baseRotationTime: number; baseDegree: number };
 };
 
 const SPIN_WHEEL_SETTING: SpinWheelSetting = {
@@ -49,6 +50,10 @@ const SPIN_WHEEL_SETTING: SpinWheelSetting = {
       proportion: 1,
     },
   ],
+  ux: {
+    baseRotationTime: 5,
+    baseDegree: 7 * 360, // minimum rotation angle
+  },
 };
 
 const App = () => {
@@ -61,7 +66,10 @@ const App = () => {
         <div className="showSelect">
           will land on: {prizes[landOnIdx]?.name}
         </div>
-        <SpinWheel></SpinWheel>
+        <SpinWheel
+          spinWheelSetting={spinWheelSetting}
+          spinText="SPIN"
+        ></SpinWheel>
       </div>
       <div className="spin-wheel-control-container">
         <SpinWheelControl></SpinWheelControl>
