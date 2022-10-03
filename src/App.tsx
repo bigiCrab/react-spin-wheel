@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.scss";
 import SpinWheel from "./components/spin-wheel/spin-wheel.component";
 import SpinWheelControl from "./components/spin-wheel-control/spin-wheel-control.component";
@@ -17,6 +17,7 @@ export type SpinWheelSetting = {
 };
 
 const SPIN_WHEEL_SETTING: SpinWheelSetting = {
+  // TODO change to landOnId
   landOnIdx: 0,
   prizes: [
     {
@@ -51,7 +52,7 @@ const SPIN_WHEEL_SETTING: SpinWheelSetting = {
     },
   ],
   ux: {
-    baseRotationTime: 5,
+    baseRotationTime: 4,
     baseDegree: 7 * 360, // minimum rotation angle
   },
 };
@@ -59,6 +60,13 @@ const SPIN_WHEEL_SETTING: SpinWheelSetting = {
 const App = () => {
   const [spinWheelSetting, setSpinWheelSetting] = useState(SPIN_WHEEL_SETTING);
   const { landOnIdx, prizes } = spinWheelSetting;
+
+  useEffect(() => {
+    setSpinWheelSetting((pre) => ({
+      ...pre,
+      landOnIdx: Math.min(pre.landOnIdx, prizes.length - 1),
+    }));
+  }, [prizes.length]);
 
   return (
     <div className="App">
