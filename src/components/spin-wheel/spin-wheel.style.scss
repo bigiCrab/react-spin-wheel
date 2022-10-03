@@ -1,43 +1,45 @@
 .spin-wheel {
+  width: 250px;
+  height: 250px;
+  font-size: 16px;
   .wheel {
-    width: 250px;
-    height: 250px;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     position: relative;
     overflow: hidden;
-    border: 8px solid #fff;
+    border: 0.5em solid #fff;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px, rgba(0, 0, 0, 0.05) 0px 3px 0px;
-    transform: rotate(0deg);
-
+    // inner shadow
     &:before {
       content: "";
       position: absolute;
-      border: 4px solid rgba(0, 0, 0, 0.1);
-      width: 242px;
-      height: 242px;
+      border: 0.25em solid rgba(0, 0, 0, 0.1);
+      width: calc(100% - 0.5em);
+      height: calc(100% - 0.5em);
       border-radius: 50%;
       z-index: 10;
       pointer-events: none;
     }
-
+    // top pointer
     &:after {
       content: "";
       position: absolute;
       width: 0;
       height: 0;
       border-style: solid;
-      border-width: 28px 20px 0 20px;
+      border-width: 1.75em 1.25em 0;
       border-color: #ffffff transparent transparent transparent;
-      top: -11px;
-      left: 105px;
+      top: 0;
+      left: 50%;
+      translate: -50% -50%;
       z-index: 10;
     }
     // rotate part
     .inner-wheel {
       width: 100%;
       height: 100%;
-      // transition: all 6s cubic-bezier(0.11,-0.03, 0, 1);
-
+      // TODO fix this
       .sec {
         position: absolute;
         width: 0;
@@ -67,12 +69,12 @@
     }
 
     .spin-btn {
-      width: 68px;
-      height: 68px;
+      width: 4.25em;
+      height: 4.25em;
       position: absolute;
       top: 50%;
       left: 50%;
-      margin: -34px 0 0 -34px;
+      translate: -50% -50%;
       border-radius: 50%;
       box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 0px;
       z-index: 10;
@@ -82,17 +84,18 @@
 
       user-select: none;
 
-      // pointer
+      // center pointer
       &:before {
         content: "";
         position: absolute;
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 0 20px 28px 20px;
+        border-width: 0 1.25em 1.75em;
         border-color: transparent transparent #ffffff transparent;
-        top: -12px;
-        left: 14px;
+        top: 0;
+        left: 50%;
+        translate: -50% -50%;
       }
 
       .spin-text {
@@ -114,12 +117,12 @@
       }
 
       .inner-spin {
-        width: 54px;
-        height: 54px;
+        width: 80%;
+        height: 80%;
         position: absolute;
         top: 50%;
         left: 50%;
-        margin: -27px 0 0 -27px;
+        translate: -50% -50%;
         border-radius: 50%;
         z-index: 10;
         box-shadow: rgba(255, 255, 255, 1) 0px -2px 0px inset,
@@ -139,10 +142,10 @@
         box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 5px inset;
       }
     }
-
-    #shine {
-      width: 250px;
-      height: 250px;
+    // shine on the wheel
+    .shine {
+      width: 100%;
+      height: 100%;
       position: absolute;
       top: 0;
       left: 0;
