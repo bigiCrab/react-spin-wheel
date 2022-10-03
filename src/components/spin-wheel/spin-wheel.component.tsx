@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { SpinWheelSetting } from "../../App";
-import "./spin-wheel.style.scss";
+import "./spin-wheel.styles.scss";
 
 const SpinWheel = ({
   spinWheelSetting,
@@ -25,8 +25,9 @@ const SpinWheel = ({
     360 / prizes.length
   );
   useEffect(() => {
+    // TODO when detelling prizes, board has delayed update(cause flashing)
     setPrizeSectionDegree((pre) => 360 / prizes.length);
-  }, [prizes]);
+  }, [prizes.length]);
 
   // use to draw clipPath of the prizes, the center of the graph is {deg}
   function calcClipPath(deg: number): string {
@@ -50,13 +51,16 @@ const SpinWheel = ({
   }
 
   function onSpinHandler() {
-    // TODO move to util
+    // TODO move to utils
     function getRandomIntBetween(min: number, max: number) {
       return Math.floor(Math.random() * (max - min) + min);
     }
     return () => {
       // TODO copy from codepen, change to english comment, define better variables name
       setInnerWheelRotate((lastRotate) => {
+        if (prizeSectionDegree === Infinity) {
+          return lastRotate;
+        }
         // 將新base度數改為360倍數(方便計算)
         var newBaseDegree =
           baseDegree + lastRotate - ((baseDegree + lastRotate) % 360);
@@ -69,7 +73,6 @@ const SpinWheel = ({
         );
         // 因為轉盤順序是向右，轉的動作是向左，所以要用 360-算出度數
         var landOnDegree = 360 - landOnDegreeOffset;
-
         return newBaseDegree + landOnDegree;
       });
     };
@@ -99,12 +102,10 @@ const SpinWheel = ({
               >
                 <span
                   className="prize"
-                  style={
-                    {
-                      // TODO find a way to clip text
-                      shapeOutside: calcClipPath(prizeSectionDegree),
-                    }
-                  }
+                  style={{
+                    // TODO find a way to clip text
+                    shapeOutside: calcClipPath(prizeSectionDegree),
+                  }}
                 >
                   {prize.name}
                 </span>
