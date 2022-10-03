@@ -19,6 +19,7 @@
       width: 350px;
       height: 350px;
       font-size: 18px;
+      flex-shrink: 0;
     }
   }
 
@@ -43,5 +44,7 @@
     margin-top: 0.5em;
     margin-bottom: 1em;
     font-size: 2em;
+    max-width: 100%;
+    max-height: calc(50% - 1.5em);
   }
 }
