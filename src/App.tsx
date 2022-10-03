@@ -12,8 +12,9 @@ export type Prize = {
 
 export type SpinWheelSetting = {
   landOnIdx: number; // well land on index of the prizes
-  prizes: Prize[];
-  ux: { baseRotationTime: number; baseDegree: number };
+  prizes: Prize[]; //  contents of the board
+  ux: { baseRotationTime: number; baseDegree: number }; // spin animations
+  ui: { width: string; fontSize: string }; // wheel sizes
 };
 
 const SPIN_WHEEL_SETTING: SpinWheelSetting = {
@@ -55,11 +56,15 @@ const SPIN_WHEEL_SETTING: SpinWheelSetting = {
     baseRotationTime: 4,
     baseDegree: 7 * 360, // minimum rotation angle
   },
+  ui: {
+    width: "350px",
+    fontSize: "18px",
+  },
 };
 
 const App = () => {
   const [spinWheelSetting, setSpinWheelSetting] = useState(SPIN_WHEEL_SETTING);
-  const { landOnIdx, prizes } = spinWheelSetting;
+  const { landOnIdx, prizes, ui } = spinWheelSetting;
 
   useEffect(() => {
     setSpinWheelSetting((pre) => ({
@@ -70,100 +75,113 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className="spin-wheel-container">
-        <div className="showSelect">
+      <div className="left-container flex-column-center">
+        <div className="header-text">
           will land on: {prizes[landOnIdx]?.name}
         </div>
-        <SpinWheel
-          spinWheelSetting={spinWheelSetting}
-          spinText="SPIN"
-        ></SpinWheel>
-      </div>
-      <div className="spin-wheel-control-container">
-        <SpinWheelControl></SpinWheelControl>
-        {/* TODO move to SpinWheelControl */}
-        {prizes.map((prize, index) => (
-          <div
-            key={prize.name}
-            style={{
-              color: prize.color,
-              backgroundColor: prize.bgColor,
-            }}
-          >
-            <span style={{ display: "inline-block", width: "3em" }}>
-              {index === landOnIdx ? (
-                "✨"
-              ) : (
-                <button
-                  style={{ fontSize: "0.5em" }}
-                  onClick={() => {
-                    setSpinWheelSetting((pre) => ({
-                      ...pre,
-                      landOnIdx: index,
-                    }));
-                  }}
-                >
-                  Land on me
-                </button>
-              )}
-            </span>
-            <span>
-              name:
-              {/* TODO implement ReactLink */}
-              <input
-                type="text"
-                style={{ maxWidth: "4.5rem" }}
-                value={prize.name}
-                onChange={(event) => {
-                  setSpinWheelSetting((pre) => {
-                    let newPrizes = pre.prizes.slice();
-                    newPrizes[index].name = event.target.value;
-                    return {
-                      ...pre,
-                      prizes: newPrizes,
-                    };
-                  });
-                }}
-              />
-            </span>
-            <span>
-              proportion:
-              <input
-                type="number"
-                style={{ maxWidth: "2.5rem" }}
-                value={prize.proportion}
-                min="0.01"
-                onChange={(event) => {
-                  setSpinWheelSetting((pre) => {
-                    let newPrizes = pre.prizes.slice();
-                    newPrizes[index].proportion = Number(event.target.value);
-                    return {
-                      ...pre,
-                      prizes: newPrizes,
-                    };
-                  });
-                }}
-              />
-            </span>
-            <button
-              onClick={(event) => {
-                setSpinWheelSetting((pre) => ({
-                  ...pre,
-                  prizes: pre.prizes.filter((v) => v !== prize),
-                }));
-              }}
-            >
-              -
-            </button>
-          </div>
-        ))}
-        <button
-          onClick={(event) => {
-            setSpinWheelSetting(SPIN_WHEEL_SETTING);
+        <div
+          className="spin-wheel-container"
+          style={{
+            width: ui.width,
+            height: ui.width,
+            fontSize: ui.fontSize,
           }}
         >
-          Reset
-        </button>
+          <SpinWheel
+            spinWheelSetting={spinWheelSetting}
+            spinText="SPIN"
+          ></SpinWheel>
+        </div>
+      </div>
+      <div className="right-container flex-column-center">
+        <div className="header-text">SpinWheelControl</div>
+        <div className="spin-wheel-control-container">
+          <SpinWheelControl></SpinWheelControl>
+          {/* TODO move to SpinWheelControl */}
+          {prizes.map((prize, index) => (
+            <div
+              key={index}
+              style={{
+                color: prize.color,
+                backgroundColor: prize.bgColor,
+              }}
+            >
+              <span style={{ display: "inline-block", width: "3em" }}>
+                {index === landOnIdx ? (
+                  "✨"
+                ) : (
+                  <button
+                    style={{ fontSize: "0.5em" }}
+                    onClick={() => {
+                      setSpinWheelSetting((pre) => ({
+                        ...pre,
+                        landOnIdx: index,
+                      }));
+                    }}
+                  >
+                    PICK
+                  </button>
+                )}
+              </span>
+              <span>
+                name:
+                {/* TODO implement ReactLink */}
+                <input
+                  type="text"
+                  style={{ maxWidth: "4.5rem" }}
+                  value={prize.name}
+                  onChange={(event) => {
+                    setSpinWheelSetting((pre) => {
+                      let newPrizes = pre.prizes.slice();
+                      newPrizes[index].name = event.target.value;
+                      return {
+                        ...pre,
+                        prizes: newPrizes,
+                      };
+                    });
+                  }}
+                />
+              </span>
+              <span>
+                proportion:
+                <input
+                  type="number"
+                  style={{ maxWidth: "2.5rem" }}
+                  value={prize.proportion}
+                  min="0.01"
+                  onChange={(event) => {
+                    setSpinWheelSetting((pre) => {
+                      let newPrizes = pre.prizes.slice();
+                      newPrizes[index].proportion = Number(event.target.value);
+                      return {
+                        ...pre,
+                        prizes: newPrizes,
+                      };
+                    });
+                  }}
+                />
+              </span>
+              <button
+                onClick={(event) => {
+                  setSpinWheelSetting((pre) => ({
+                    ...pre,
+                    prizes: pre.prizes.filter((v) => v !== prize),
+                  }));
+                }}
+              >
+                -
+              </button>
+            </div>
+          ))}
+          <button
+            onClick={(event) => {
+              setSpinWheelSetting(SPIN_WHEEL_SETTING);
+            }}
+            style={{ float: "right" }}
+          >
+            Reset
+          </button>
+        </div>
       </div>
     </div>
   );

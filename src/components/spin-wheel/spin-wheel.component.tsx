@@ -97,7 +97,17 @@ const SpinWheel = ({
                   clipPath: calcClipPath(prizeSectionDegree),
                 }}
               >
-                <span className="prize">{prize.name}</span>
+                <span
+                  className="prize"
+                  style={
+                    {
+                      // TODO find a way to clip text
+                      shapeOutside: calcClipPath(prizeSectionDegree),
+                    }
+                  }
+                >
+                  {prize.name}
+                </span>
               </div>
             );
           })}

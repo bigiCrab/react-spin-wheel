@@ -6,18 +6,40 @@
   align-content: center;
   justify-content: space-between;
 
-  .spin-wheel-container {
+  .left-container {
     width: 50%;
-    background-color: aqua;
 
-    .showSelect {
-      font-size: 2em;
+    .header-text {
       color: rgb(100, 100, 100);
+    }
+
+    .spin-wheel-container {
+      // use this to control wheel size
+      width: 350px;
+      height: 350px;
+      font-size: 18px;
     }
   }
 
-  .spin-wheel-control-container {
+  .right-container {
     width: 50%;
-    background-color: greenyellow;
+    background-color: #8b8fe5;
+
+    .header-text {
+      color: rgb(240, 240, 240);
+    }
+  }
+
+  .flex-column-center {
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+  }
+
+  .header-text {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    font-size: 2em;
   }
 }
