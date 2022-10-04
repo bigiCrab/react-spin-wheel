@@ -13,7 +13,7 @@ export type Prize = {
 export type SpinWheelSetting = {
   landOnIdx: number; // well land on index of the prizes
   prizes: Prize[]; //  contents of the board
-  ux: { baseRotationTime: number; baseDegree: number }; // spin animations
+  ux: { baseRotationTime: number; baseDegree: number; spinAniEnable: boolean }; // spin animations
   ui?: { width: string; fontSize: string }; // wheel sizes
 };
 
@@ -53,8 +53,10 @@ const SPIN_WHEEL_SETTING: SpinWheelSetting = {
     },
   ],
   ux: {
-    baseRotationTime: 4,
+    // TODO add additional animations time range, transition porp
+    baseRotationTime: 4, // rotation time
     baseDegree: 7 * 360, // minimum rotation angle
+    spinAniEnable: true,
   },
   ui: {
     width: "350px",
@@ -96,6 +98,7 @@ const App = () => {
       <div className="right-container flex-column-center">
         <div className="header-text">SpinWheelControl</div>
         <div className="spin-wheel-control-container">
+          {/* TODO refactor those onXXfunction */}
           <SpinWheelControl
             spinWheelSetting={spinWheelSetting}
             onLandOnIdxChangeHandler={(index) => {
@@ -132,6 +135,18 @@ const App = () => {
             }}
             onResetHandler={() => {
               setSpinWheelSetting(SPIN_WHEEL_SETTING);
+            }}
+            onToggleSpinAnimationHandler={() => {
+              setSpinWheelSetting((pre) => {
+                const { ux } = pre;
+                return {
+                  ...pre,
+                  ux: {
+                    ...ux,
+                    spinAniEnable: !ux.spinAniEnable,
+                  },
+                };
+              });
             }}
           ></SpinWheelControl>
         </div>

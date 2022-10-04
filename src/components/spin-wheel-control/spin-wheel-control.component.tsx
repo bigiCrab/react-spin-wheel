@@ -3,12 +3,13 @@ import { Prize, SpinWheelSetting } from "../../App";
 import "./spin-wheel-control.styles.scss";
 
 const SpinWheelControl = ({
-  spinWheelSetting: { prizes, landOnIdx },
+  spinWheelSetting: { prizes, landOnIdx, ux },
   onLandOnIdxChangeHandler,
   onPrizeNameChangeHandler,
   onProportionChangeHandler,
   onDeleteHandler,
   onResetHandler,
+  onToggleSpinAnimationHandler,
 }: {
   spinWheelSetting: SpinWheelSetting;
   onLandOnIdxChangeHandler: (index: number) => void;
@@ -22,6 +23,7 @@ const SpinWheelControl = ({
   ) => void;
   onDeleteHandler: (prize: Prize) => void;
   onResetHandler: () => void;
+  onToggleSpinAnimationHandler: () => void;
 }) => {
   return (
     <div className="spin-wheel-control">
@@ -85,6 +87,15 @@ const SpinWheelControl = ({
           </div>
         ))}
       </div>
+      {/* TODO encapsul id */}
+      <input
+        type="checkbox"
+        id="animation-toggle"
+        value="spinAniEnable"
+        checked={ux.spinAniEnable}
+        onChange={onToggleSpinAnimationHandler}
+      />
+      <label htmlFor="animation-toggle">animation toggle</label>
       <button
         aria-label="reset button"
         onClick={onResetHandler}

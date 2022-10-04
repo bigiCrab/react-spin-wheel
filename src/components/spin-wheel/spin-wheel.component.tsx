@@ -14,7 +14,7 @@ const SpinWheel = ({
   const {
     prizes,
     landOnIdx,
-    ux: { baseRotationTime, baseDegree },
+    ux: { baseRotationTime, baseDegree, spinAniEnable },
   } = spinWheelSetting;
 
   // for spin animations
@@ -102,7 +102,9 @@ const SpinWheel = ({
           className="inner-wheel"
           style={{
             rotate: `${innerWheelRotate}deg`,
-            transition: `all ${baseRotationTime}s cubic-bezier(0.11,-0.03, 0, 1)`,
+            transition: spinAniEnable
+              ? `all ${baseRotationTime}s cubic-bezier(0.11,-0.03, 0, 1)`
+              : "",
           }}
         >
           {prizes.map((prize, i, prizes) => {
