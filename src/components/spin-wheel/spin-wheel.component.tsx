@@ -26,7 +26,6 @@ const SpinWheel = ({
     Array(prizes.length).fill(0)
   );
   useEffect(() => {
-    // TODO fix - when detelling prizes, board has delayed update(cause flashing)
     setPrizesSectionDegree(() => {
       let sumOfProportion = prizes.reduce((pre, curr) => {
         return pre + curr.proportion;
@@ -36,6 +35,7 @@ const SpinWheel = ({
         return (360 / sumOfProportion) * prize.proportion;
       });
     });
+    // TODO fix warning
   }, [[...prizes.map((prize) => prize.proportion)].join("_")]);
 
   // use to draw clipPath of the prizes, the center of the graph is {deg}
@@ -67,22 +67,22 @@ const SpinWheel = ({
           return lastRotate;
         }
         // 將新base度數改為360倍數(方便計算)
-        var newBaseDegree =
+        let newBaseDegree =
           baseDegree + lastRotate - ((baseDegree + lastRotate) % 360);
         // 決定要落在哪區的度數，位於中間
-        var landOnDegreeCenter = getInitPrizeRotate(landOnIdx);
+        let landOnDegreeCenter = getInitPrizeRotate(landOnIdx);
         // 決定要落在這區的哪個範圍，可以選擇只落在前半，注意不要偏差太多跑到別區
-        var landOnDegreeOffset = getRandomIntBetween(
+        let landOnDegreeOffset = getRandomIntBetween(
           landOnDegreeCenter - (prizesSectionDegree[landOnIdx] / 2) * 0.9,
           landOnDegreeCenter + (prizesSectionDegree[landOnIdx] / 2) * 0.9
         );
         // 因為轉盤順序是向右，轉的動作是向左，所以要用 360-算出度數
-        var landOnDegree = 360 - landOnDegreeOffset;
+        let landOnDegree = 360 - landOnDegreeOffset;
         return newBaseDegree + landOnDegree;
       });
     };
   }
-
+  // get center degree of the prizes[index]
   function getInitPrizeRotate(index: number) {
     if (prizesSectionDegree.length === 0) return 0;
 
