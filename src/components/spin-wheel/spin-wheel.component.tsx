@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { SpinWheelSetting } from "../../App";
+import { getRandomIntBetween } from "../../utils/random.utils";
 import "./spin-wheel.styles.scss";
 
 const SpinWheel = ({
@@ -59,10 +60,6 @@ const SpinWheel = ({
   }
 
   function onSpinHandler() {
-    // TODO move to utils
-    function getRandomIntBetween(min: number, max: number) {
-      return Math.floor(Math.random() * (max - min) + min);
-    }
     return () => {
       // TODO copy from codepen, change to english comment, define better variables name
       setInnerWheelRotate((lastRotate) => {
