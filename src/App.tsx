@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.scss";
 import SpinWheel from "./components/spin-wheel/spin-wheel.component";
 import SpinWheelControl from "./components/spin-wheel-control/spin-wheel-control.component";
+import { deepCopy } from "./utils/obj.utils";
 
 export type Prize = {
   name: string; // The name of the prize
@@ -66,7 +67,7 @@ const SPIN_WHEEL_SETTING: SpinWheelSetting = {
 
 const App = () => {
   const [spinWheelSetting, setSpinWheelSetting] = useState(
-    JSON.parse(JSON.stringify(SPIN_WHEEL_SETTING)) as SpinWheelSetting
+    deepCopy(SPIN_WHEEL_SETTING)
   );
   const { landOnIdx, prizes, ui } = spinWheelSetting;
 
@@ -136,11 +137,7 @@ const App = () => {
               }));
             }}
             onResetHandler={() => {
-              setSpinWheelSetting(
-                JSON.parse(
-                  JSON.stringify(SPIN_WHEEL_SETTING)
-                ) as SpinWheelSetting
-              );
+              setSpinWheelSetting(deepCopy(SPIN_WHEEL_SETTING));
             }}
             onToggleSpinAnimationHandler={() => {
               setSpinWheelSetting((pre) => {
