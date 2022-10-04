@@ -39,17 +39,17 @@ const SPIN_WHEEL_SETTING: SpinWheelSetting = {
     {
       name: "🍔",
       bgColor: "#f39c12",
-      proportion: 1,
+      proportion: 2,
     },
     {
       name: "🥞",
       bgColor: "#d35400",
-      proportion: 1,
+      proportion: 2,
     },
     {
       name: "🌭",
       bgColor: "#c0392b",
-      proportion: 1,
+      proportion: 4,
     },
   ],
   ux: {

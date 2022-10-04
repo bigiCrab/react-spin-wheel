@@ -21,17 +21,25 @@ const SpinWheel = ({
 
   // TODO here is sus, find a better way to update calcDegree
   // calc the angle of the prizes board sector
-  const [prizeSectionDegree, setPrizeSectionDegree] = useState(
-    360 / prizes.length
+  const [prizesSectionDegree, setPrizesSectionDegree] = useState<number[]>(
+    Array(prizes.length).fill(0)
   );
   useEffect(() => {
-    // TODO when detelling prizes, board has delayed update(cause flashing)
-    setPrizeSectionDegree((pre) => 360 / prizes.length);
-  }, [prizes.length]);
+    // TODO fix - when detelling prizes, board has delayed update(cause flashing)
+    setPrizesSectionDegree(() => {
+      let sumOfProportion = prizes.reduce((pre, curr) => {
+        return pre + curr.proportion;
+      }, 0);
+
+      return prizes.map((prize) => {
+        return (360 / sumOfProportion) * prize.proportion;
+      });
+    });
+  }, [...prizes.map((prize) => prize.proportion)]);
 
   // use to draw clipPath of the prizes, the center of the graph is {deg}
   function calcClipPath(deg: number): string {
-    if (deg === Infinity) return "";
+    if (deg === Infinity || isNaN(deg)) return "";
     let theta = (deg / 2 / 180) * Math.PI;
     let dx = Math.sin(theta) * 100 * 2;
     let dy = Math.cos(theta) * 100 * 2;
@@ -58,24 +66,36 @@ const SpinWheel = ({
     return () => {
       // TODO copy from codepen, change to english comment, define better variables name
       setInnerWheelRotate((lastRotate) => {
-        if (prizeSectionDegree === Infinity) {
+        if (prizesSectionDegree.length === 0) {
           return lastRotate;
         }
         // 將新base度數改為360倍數(方便計算)
         var newBaseDegree =
           baseDegree + lastRotate - ((baseDegree + lastRotate) % 360);
         // 決定要落在哪區的度數，位於中間
-        var landOnDegreeCenter = prizeSectionDegree * landOnIdx;
+        var landOnDegreeCenter = getInitPrizeRotate(landOnIdx);
         // 決定要落在這區的哪個範圍，可以選擇只落在前半，注意不要偏差太多跑到別區
         var landOnDegreeOffset = getRandomIntBetween(
-          landOnDegreeCenter - (prizeSectionDegree / 2) * 0.9,
-          landOnDegreeCenter + (prizeSectionDegree / 2) * 0.9
+          landOnDegreeCenter - (prizesSectionDegree[landOnIdx] / 2) * 0.9,
+          landOnDegreeCenter + (prizesSectionDegree[landOnIdx] / 2) * 0.9
         );
         // 因為轉盤順序是向右，轉的動作是向左，所以要用 360-算出度數
         var landOnDegree = 360 - landOnDegreeOffset;
         return newBaseDegree + landOnDegree;
       });
     };
+  }
+
+  function getInitPrizeRotate(index: number) {
+    if (prizesSectionDegree.length === 0) return 0;
+
+    let startOffSet = prizesSectionDegree[0] / 2;
+    let endOffSet = prizesSectionDegree[index] / 2;
+    let sumToIndexDegree = 0;
+    for (let i = 0; i <= index; i++) {
+      sumToIndexDegree += prizesSectionDegree[i];
+    }
+    return sumToIndexDegree - startOffSet - endOffSet;
   }
 
   return (
@@ -94,17 +114,17 @@ const SpinWheel = ({
                 className="sector"
                 key={i}
                 style={{
-                  rotate: `${prizeSectionDegree * i}deg`,
+                  rotate: `${getInitPrizeRotate(i)}deg`,
                   color: `${prize.color}`,
                   backgroundColor: `${prize.bgColor}`,
-                  clipPath: calcClipPath(prizeSectionDegree),
+                  clipPath: calcClipPath(prizesSectionDegree[i]),
                 }}
               >
                 <span
                   className="prize"
                   style={{
                     // TODO find a way to clip text
-                    shapeOutside: calcClipPath(prizeSectionDegree),
+                    shapeOutside: calcClipPath(prizesSectionDegree[i]),
                   }}
                 >
                   {prize.name}
