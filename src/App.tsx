@@ -15,7 +15,7 @@ export type SpinWheelSetting = {
   landOnIdx: number; // well land on index of the prizes
   prizes: Prize[]; //  contents of the board
   ux: { baseRotationTime: number; baseDegree: number; spinAniEnable: boolean }; // spin animations
-  ui?: { width: string; fontSize: string }; // wheel sizes
+  ui?: { width?: string; fontSize?: string }; // wheel sizes
 };
 
 const SPIN_WHEEL_SETTING: SpinWheelSetting = {
@@ -69,7 +69,7 @@ const App = () => {
   const [spinWheelSetting, setSpinWheelSetting] = useState(
     deepCopy(SPIN_WHEEL_SETTING)
   );
-  const { landOnIdx, prizes, ui } = spinWheelSetting;
+  const { landOnIdx, prizes } = spinWheelSetting;
 
   useEffect(() => {
     setSpinWheelSetting((pre) => ({
@@ -84,14 +84,7 @@ const App = () => {
         <div className="header-text">
           will land on: {prizes[landOnIdx]?.name}
         </div>
-        <div
-          className="spin-wheel-container"
-          style={{
-            width: ui?.width,
-            height: ui?.width,
-            fontSize: ui?.fontSize,
-          }}
-        >
+        <div className="spin-wheel-container">
           <SpinWheel
             spinWheelSetting={spinWheelSetting}
             spinText="SPIN"

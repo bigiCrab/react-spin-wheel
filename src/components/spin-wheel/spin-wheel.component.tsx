@@ -14,13 +14,13 @@ const SpinWheel = ({
   const {
     prizes,
     landOnIdx,
+    ui = { width: "100%", fontSize: "1em" },
     ux: { baseRotationTime, baseDegree, spinAniEnable },
   } = spinWheelSetting;
-
   // for spin animations
   const [innerWheelRotate, setInnerWheelRotate] = useState(0);
 
-  // TODO here is sus, find a better way to update calcDegree
+  // TODO here is sus, find a better way to update prizesSectionDegree
   // calc the angle of the prizes board sector
   const [prizesSectionDegree, setPrizesSectionDegree] = useState<number[]>(
     Array(prizes.length).fill(0)
@@ -96,7 +96,14 @@ const SpinWheel = ({
   }
 
   return (
-    <div className="spin-wheel">
+    <div
+      className="spin-wheel"
+      style={{
+        width: ui.width,
+        height: ui.width,
+        fontSize: ui.fontSize,
+      }}
+    >
       <div className="wheel">
         <div
           className="inner-wheel"
