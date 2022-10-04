@@ -67,7 +67,7 @@ const SpinWheelControl = ({
                 type="number"
                 className="proportion-input"
                 value={prize.proportion}
-                min="0.01"
+                min="1"
                 onChange={(event) => onProportionChangeHandler(event, index)}
               />
             </span>
