@@ -36,7 +36,7 @@ const SpinWheel = ({
         return (360 / sumOfProportion) * prize.proportion;
       });
     });
-  }, [...prizes.map((prize) => prize.proportion)]);
+  }, [[...prizes.map((prize) => prize.proportion)].join("_")]);
 
   // use to draw clipPath of the prizes, the center of the graph is {deg}
   function calcClipPath(deg: number): string {
