@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/react-spin-wheel/static/css/main.2651af68.css",
+    "main.js": "/react-spin-wheel/static/js/main.09cbf9c5.js",
+    "static/js/787.264d9aff.chunk.js": "/react-spin-wheel/static/js/787.264d9aff.chunk.js",
+    "index.html": "/react-spin-wheel/index.html",
+    "main.2651af68.css.map": "/react-spin-wheel/static/css/main.2651af68.css.map",
+    "main.09cbf9c5.js.map": "/react-spin-wheel/static/js/main.09cbf9c5.js.map",
+    "787.264d9aff.chunk.js.map": "/react-spin-wheel/static/js/787.264d9aff.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2651af68.css",
+    "static/js/main.09cbf9c5.js"
+  ]
+}
