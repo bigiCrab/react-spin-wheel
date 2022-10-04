@@ -11,6 +11,7 @@ pages: <https://bigicrab.github.io/react-spin-wheel/>
 - [x] use react hook
 - [x] use function component
 - [x] reuseable(SpinWheel component)
+- [x] typescript
 - [x] put on github pages
 - [ ] extract setting
   - [x] prize
