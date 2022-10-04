@@ -37,19 +37,12 @@ const SpinWheelControl = ({
               backgroundColor: prize.bgColor,
             }}
           >
-            <span
-              style={{
-                display: "inline-block",
-                width: "4.5em",
-                textAlign: "center",
-              }}
-            >
+            <span className="select-btn">
               {index === landOnIdx ? (
                 "✨"
               ) : (
                 <button
                   aria-label="change land on button"
-                  // style={{ fontSize: "0.5em" }}
                   onClick={() => onLandOnIdxChangeHandler(index)}
                 >
                   PICK
@@ -62,7 +55,7 @@ const SpinWheelControl = ({
               <input
                 aria-label="prizes name input box"
                 type="text"
-                style={{ maxWidth: "4.5rem" }}
+                className="name-input"
                 value={prize.name}
                 onChange={(event) => onPrizeNameChangeHandler(event, index)}
               />
@@ -72,7 +65,7 @@ const SpinWheelControl = ({
               <input
                 aria-label="proportion input box"
                 type="number"
-                style={{ maxWidth: "2.5rem" }}
+                className="proportion-input"
                 value={prize.proportion}
                 min="0.01"
                 onChange={(event) => onProportionChangeHandler(event, index)}
@@ -99,7 +92,7 @@ const SpinWheelControl = ({
       <button
         aria-label="reset button"
         onClick={onResetHandler}
-        style={{ float: "right" }}
+        className="reset-button"
       >
         Reset
       </button>

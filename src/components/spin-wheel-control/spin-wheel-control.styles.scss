@@ -6,7 +6,25 @@
       padding: 0.5em;
       display: flex;
       gap: 0.25em;
+
+      .select-btn {
+        display: inline-block;
+        width: 4.5em;
+        text-align: center;
+      }
+
+      .name-input {
+        max-width: 4.5rem;
+      }
+
+      .proportion-input {
+        max-width: 2.5rem;
+      }
     }
+  }
+
+  .reset-button {
+    float: right;
   }
 
   button {

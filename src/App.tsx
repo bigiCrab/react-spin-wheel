@@ -65,7 +65,9 @@ const SPIN_WHEEL_SETTING: SpinWheelSetting = {
 };
 
 const App = () => {
-  const [spinWheelSetting, setSpinWheelSetting] = useState(SPIN_WHEEL_SETTING);
+  const [spinWheelSetting, setSpinWheelSetting] = useState(
+    JSON.parse(JSON.stringify(SPIN_WHEEL_SETTING)) as SpinWheelSetting
+  );
   const { landOnIdx, prizes, ui } = spinWheelSetting;
 
   useEffect(() => {
@@ -96,7 +98,7 @@ const App = () => {
         </div>
       </div>
       <div className="right-container flex-column-center">
-        <div className="header-text">SpinWheelControl</div>
+        <div className="header-text">Spin Wheel Control</div>
         <div className="spin-wheel-control-container">
           {/* TODO refactor those onXXfunction */}
           <SpinWheelControl
@@ -134,7 +136,11 @@ const App = () => {
               }));
             }}
             onResetHandler={() => {
-              setSpinWheelSetting(SPIN_WHEEL_SETTING);
+              setSpinWheelSetting(
+                JSON.parse(
+                  JSON.stringify(SPIN_WHEEL_SETTING)
+                ) as SpinWheelSetting
+              );
             }}
             onToggleSpinAnimationHandler={() => {
               setSpinWheelSetting((pre) => {
