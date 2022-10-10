@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
-import { SpinWheelSetting } from "../../App";
+import { useContext, useEffect, useState } from "react";
+import {
+  SpinWheelSetting,
+  SpinWheelSettingContext,
+} from "../../contexts/spin-wheel-setting.context";
 import { getRandomIntBetween } from "../../utils/random.utils";
 import "./spin-wheel.styles.scss";
 
@@ -11,6 +14,8 @@ const SpinWheel = ({
   spinText?: string;
 }) => {
   const DEFAULT_SPIN_TEXT = "START";
+  // TODO change to context? think about reuseability
+  // const { spinWheelSetting } = useContext(SpinWheelSettingContext);
   const {
     prizes,
     landOnIdx,
