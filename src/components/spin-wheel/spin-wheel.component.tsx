@@ -20,7 +20,6 @@ const SpinWheel = ({
   // for spin animations
   const [innerWheelRotate, setInnerWheelRotate] = useState(0);
 
-  // TODO here is sus, find a better way to update prizesSectionDegree
   // calc the angle of the prizes board sector
   const [prizesSectionDegree, setPrizesSectionDegree] = useState<number[]>(
     Array(prizes.length).fill(0)
@@ -35,8 +34,7 @@ const SpinWheel = ({
         return (360 / sumOfProportion) * prize.proportion;
       });
     });
-    // TODO fix warning
-  }, [[...prizes.map((prize) => prize.proportion)].join("_")]);
+  }, [prizes]);
 
   // use to draw clipPath of the prizes, the center of the graph is {deg}
   function calcClipPath(deg: number): string {
@@ -67,17 +65,17 @@ const SpinWheel = ({
           return lastRotate;
         }
         // 將新base度數改為360倍數(方便計算)
-        let newBaseDegree =
+        const newBaseDegree =
           baseDegree + lastRotate - ((baseDegree + lastRotate) % 360);
         // 決定要落在哪區的度數，位於中間
-        let landOnDegreeCenter = getInitPrizeRotate(landOnIdx);
+        const landOnDegreeCenter = getInitPrizeRotate(landOnIdx);
         // 決定要落在這區的哪個範圍，可以選擇只落在前半，注意不要偏差太多跑到別區
-        let landOnDegreeOffset = getRandomIntBetween(
+        const landOnDegreeOffset = getRandomIntBetween(
           landOnDegreeCenter - (prizesSectionDegree[landOnIdx] / 2) * 0.9,
           landOnDegreeCenter + (prizesSectionDegree[landOnIdx] / 2) * 0.9
         );
         // 因為轉盤順序是向右，轉的動作是向左，所以要用 360-算出度數
-        let landOnDegree = 360 - landOnDegreeOffset;
+        const landOnDegree = 360 - landOnDegreeOffset;
         return newBaseDegree + landOnDegree;
       });
     };
@@ -86,18 +84,19 @@ const SpinWheel = ({
   function getInitPrizeRotate(index: number) {
     if (prizesSectionDegree.length === 0) return 0;
 
-    let startOffSet = prizesSectionDegree[0] / 2;
-    let endOffSet = prizesSectionDegree[index] / 2;
-    let sumToIndexDegree = 0;
-    for (let i = 0; i <= index; i++) {
-      sumToIndexDegree += prizesSectionDegree[i];
-    }
+    const startOffSet = prizesSectionDegree[0] / 2;
+    const endOffSet = prizesSectionDegree[index] / 2;
+    const sumToIndexDegree = prizesSectionDegree
+      .slice(0, index + 1)
+      .reduce((prev, curr) => prev + curr);
+
     return sumToIndexDegree - startOffSet - endOffSet;
   }
 
   return (
     <div
       className="spin-wheel"
+      // TODO add styled-components
       style={{
         width: ui.width,
         height: ui.width,
