@@ -61,7 +61,6 @@ const SPIN_WHEEL_DEFAULT_SETTING: SpinWheelSetting = {
   },
 };
 
-// TODO deal with any type
 export const SpinWheelSettingContext = createContext({
   spinWheelSetting: SPIN_WHEEL_DEFAULT_SETTING,
   setSpinWheelSetting: (() => {}) as React.Dispatch<
