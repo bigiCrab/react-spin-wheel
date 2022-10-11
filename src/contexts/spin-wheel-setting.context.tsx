@@ -60,6 +60,7 @@ const SPIN_WHEEL_DEFAULT_SETTING: SpinWheelSetting = {
     fontSize: "18px",
   },
 };
+
 // TODO deal with any type
 export const SpinWheelSettingContext = createContext({
   spinWheelSetting: SPIN_WHEEL_DEFAULT_SETTING,
@@ -69,8 +70,11 @@ export const SpinWheelSettingContext = createContext({
   resetSpinWheelSetting: () => {},
 });
 
-// TODO deal with any type
-export const SpinWheelSettingProvider = ({ children }: { children: any }) => {
+export const SpinWheelSettingProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [spinWheelSetting, setSpinWheelSetting] = useState(
     SPIN_WHEEL_DEFAULT_SETTING
   );
@@ -85,9 +89,9 @@ export const SpinWheelSettingProvider = ({ children }: { children: any }) => {
   }, [prizes.length]);
 
   // TODO maybe make setSpinWheelSetting function private, then export setSpinWheelXXXSetting
-  const resetSpinWheelSetting = () => {
+  function resetSpinWheelSetting() {
     setSpinWheelSetting(SPIN_WHEEL_DEFAULT_SETTING);
-  };
+  }
 
   return (
     <SpinWheelSettingContext.Provider

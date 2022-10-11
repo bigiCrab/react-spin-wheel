@@ -5,14 +5,12 @@ import SpinWheelControl from "./components/spin-wheel-control/spin-wheel-control
 import { SpinWheelSettingContext } from "./contexts/spin-wheel-setting.context";
 
 const App = () => {
-  const { spinWheelSetting, setSpinWheelSetting } = useContext(
-    SpinWheelSettingContext
-  );
+  const { spinWheelSetting } = useContext(SpinWheelSettingContext);
   const { landOnIdx, prizes } = spinWheelSetting;
 
   return (
     <div className="App">
-      <div className="left-container flex-column-center">
+      <div className="left-container">
         <div className="header-text">
           will land on: {prizes[landOnIdx]?.name}
         </div>
@@ -23,7 +21,7 @@ const App = () => {
           ></SpinWheel>
         </div>
       </div>
-      <div className="right-container flex-column-center">
+      <div className="right-container">
         <div className="header-text">Spin Wheel Control</div>
         <div className="spin-wheel-control-container">
           <SpinWheelControl></SpinWheelControl>

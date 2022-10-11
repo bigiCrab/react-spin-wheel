@@ -6,38 +6,30 @@
   align-content: center;
   justify-content: space-between;
 
-  .left-container {
+  @mixin hafe-layout {
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
     width: 50%;
     overflow: hidden;
+  }
+
+  .left-container {
+    @include hafe-layout;
 
     .header-text {
       color: rgb(100, 100, 100);
     }
-
-    .spin-wheel-container {
-      // use this to control wheel size
-      //   width: 350px;
-      //   height: 350px;
-      //   font-size: 18px;
-      //   flex-shrink: 0;
-    }
   }
 
   .right-container {
-    width: 50%;
-    overflow: hidden;
+    @include hafe-layout;
     background-color: #8b8fe5;
 
     .header-text {
       color: rgb(240, 240, 240);
     }
-  }
-
-  .flex-column-center {
-    display: flex;
-    flex-direction: column;
-    // justify-content: center;
-    align-items: center;
   }
 
   .header-text {
